@@ -73,15 +73,42 @@ class DrumMachine extends React.Component {
 
     this.state = {
       display: "Let's play drums",
+      sliderVol: 0.25,
+      power: true,
     };
 
     this.onDisplay = this.onDisplay.bind(this);
+
+    this.powerFn = this.powerFn.bind(this);
+
+    this.changeVol = this.changeVol.bind(this);
   }
 
   onDisplay(display) {
     this.setState({
       display,
     });
+  }
+
+  powerFn() {
+    this.setState({
+      power: !this.state.power,
+      display: "",
+    });
+    if (this.state.power === false) {
+      this.setState({ display: "Power ON" });
+    } else {
+      this.setState({ display: "Power OFF" });
+    }
+  }
+
+  changeVol(e) {
+    if (this.state.power) {
+      this.setState({
+        sliderVol: e.target.value,
+        display: "Volume : " + Math.round(e.target.value * 100),
+      });
+    }
   }
 
   render() {
@@ -95,13 +122,37 @@ class DrumMachine extends React.Component {
           keycode={drum.keycode}
           soundname={drum.soundname}
           onDisplay={this.onDisplay}
+          power={this.state.power}
+          volume={this.state.sliderVol}
         />
       );
     });
+
     return (
       <div id="drum-machine">
         <h1>Drum Machine</h1>
+
         <span id="display">{this.state.display}</span>
+
+        <div id="controls">
+          <div onClick={this.powerFn} className="powerArea">
+            <div className="control">Power</div>
+          </div>
+
+          <div className="slider">
+            <input
+              type="range"
+              min="0"
+              max="1"
+              id="volSlider"
+              className="vol"
+              step="0.01"
+              value={this.state.sliderVol}
+              onChange={this.changeVol}
+            />
+          </div>
+        </div>
+
         <div id="drum-pad">{drum}</div>
       </div>
     );
@@ -109,14 +160,3 @@ class DrumMachine extends React.Component {
 }
 
 export default DrumMachine;
-
-// audio sources
-// https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3
-// https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3
-// https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3
-// https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3
-// https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3
-// https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3
-// https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3
-// https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3
-// https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3

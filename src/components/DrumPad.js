@@ -19,26 +19,39 @@ class DrumPad extends React.Component {
   }
 
   handleKeyPress(e) {
-    if (e.key.toUpperCase().charCodeAt() === this.props.keyname.charCodeAt()) {
-      this.audio.play();
-      this.audio.currentTime = 0;
-      this.props.onDisplay(this.props.soundname);
+    if (this.props.power) {
+      if (
+        e.key.toUpperCase().charCodeAt() === this.props.keyname.charCodeAt()
+      ) {
+        this.audio.pause();
+        this.audio.currentTime = 0;
+        let promise = this.audio.play();
+        if (promise !== undefined) promise.catch(function () {});
+        this.props.onDisplay(this.props.soundname);
+        this.audio.volume = this.props.volume;
+      }
     }
   }
 
   playAudio(e) {
-    this.audio.play();
-    this.audio.currentTime = 0;
-    this.props.onDisplay(this.props.soundname);
+    if (this.props.power) {
+      this.audio.pause();
+      this.audio.currentTime = 0;
+      let promise = this.audio.play();
+      if (promise !== undefined) promise.catch(function () {});
+      this.props.onDisplay(this.props.soundname);
+      this.audio.volume = this.props.volume;
+    }
   }
 
   render() {
     return (
       <div className="drum-pad" id={this.props.id} onClick={this.playAudio}>
-        <h1>{this.props.keyname}</h1>
+        <h2>{this.props.keyname}</h2>
         <audio
           className="clip"
           type="audio/mp3"
+          preload="none"
           id={this.props.keyname}
           src={this.props.src}
           ref={(ref) => (this.audio = ref)}

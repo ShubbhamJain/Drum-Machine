@@ -1,0 +1,120 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@600&display=swap");
+
+$backcolorelement: #dc3545;
+$borderelement: 2px solid #007bff;
+
+body {
+  background-color: #343a40;
+  text-align: center;
+  margin: auto;
+  width: 50%;
+}
+
+#drum-machine {
+  font-family: "Ubuntu", sans-serif;
+  display: inline-block;
+
+  h1 {
+    text-transform: uppercase;
+    margin: 0;
+    padding: 15px 0px;
+    color: #fff;
+  }
+
+  #display {
+    background-color: $backcolorelement;
+    display: block;
+    color: #fff;
+    border: $borderelement;
+    text-transform: capitalize;
+    font-family: "Source Sans Pro", sans-serif;
+    font-size: 25px;
+    padding: 15px;
+    margin-bottom: 5px;
+  }
+
+  #controls {
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 10px;
+    padding: 20px;
+    background-color: $backcolorelement;
+    border: $borderelement;
+    margin-bottom: 5px;
+
+    .powerArea {
+      .control {
+        padding: 6px 12px;
+        cursor: pointer;
+        border-radius: 5px;
+        background-color: #6699ff;
+        font-size: 20px;
+        color: #fff;
+        font-family: "Source Sans Pro", sans-serif;
+
+        &:active {
+          color: #000;
+          background-color: #fff;
+        }
+      }
+    }
+    .slider {
+      #volSlider {
+        width: 100%;
+        margin: auto;
+        margin-top: 10px;
+        background-color: #6699ff;
+        outline: none;
+      }
+
+      &:focus {
+        background: #6699ff;
+      }
+    }
+  }
+
+  #drum-pad {
+    display: inline-grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto auto;
+    border: $borderelement;
+    border-style: solid;
+
+    .drum-pad {
+      padding: 25px 50px;
+      background-color: $backcolorelement;
+      color: #fff;
+      border: $borderelement;
+      border-style: solid;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+@media (max-width: 575px) {
+  body {
+    width: 100%;
+    height: auto;
+
+    #drum-machine {
+      width: 90%;
+
+      #drum-pad {
+        display: flex;
+
+        .drum-pad {
+          padding: 0px;
+          width: 100%;
+
+          h2 {
+            margin: 10px 5px;
+          }
+        }
+      }
+    }
+  }
+}
